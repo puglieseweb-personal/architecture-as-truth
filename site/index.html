@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architecture as Truth (AAT)</title>
+<meta name="description" content="Architecture as Truth (AAT) is a way of building software in which the architecture documents are the single source of truth: people decide by changing them, AI agents build from them, and everything that ships is reconciled back into them. Set out by Emanuele Pugliese, 2026.">
+<meta name="author" content="Emanuele Pugliese">
+<link rel="canonical" href="https://architectureastruth.org/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Architecture as Truth">
+<meta property="og:title" content="Architecture as Truth (AAT)">
+<meta property="og:description" content="The architecture documents are the single source of truth. People decide by changing them, AI agents build from them, and everything that ships is reconciled back into them.">
+<meta property="og:url" content="https://architectureastruth.org/">
+<meta property="og:image" content="https://architectureastruth.org/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Architecture as Truth (AAT). The architecture documents are the single source of truth. Set out by Emanuele Pugliese, 2026.">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://architectureastruth.org/#author",
+      "name": "Emanuele Pugliese",
+      "description": "Author of Architecture as Truth (AAT), a practice for building software with AI agents.",
+      "url": "https://www.puglieseweb.com/consulting/emanuele-pugliese",
+      "sameAs": [
+        "https://www.linkedin.com/in/puglieseweb",
+        "https://github.com/puglieseweb-personal"
+      ],
+      "worksFor": { "@id": "https://architectureastruth.org/#publisher" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://architectureastruth.org/#publisher",
+      "name": "PuglieseWeb LTD",
+      "url": "https://www.puglieseweb.com"
+    },
+    {
+      "@type": "DefinedTermSet",
+      "@id": "https://architectureastruth.org/#terms",
+      "name": "Architecture as Truth",
+      "url": "https://architectureastruth.org/"
+    },
+    {
+      "@type": "DefinedTerm",
+      "@id": "https://architectureastruth.org/#definition",
+      "name": "Architecture as Truth",
+      "alternateName": "AAT",
+      "termCode": "AAT",
+      "url": "https://architectureastruth.org/#definition",
+      "description": "Architecture as Truth (AAT) is a way of building software in which the architecture documents (the decisions, the contracts, the behaviours and the plan) are the single source of truth about the product. People decide by changing those documents, AI agents build from them, and everything that ships is reconciled back into them.",
+      "inDefinedTermSet": { "@id": "https://architectureastruth.org/#terms" }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://architectureastruth.org/#wording",
+      "name": "Architecture as Truth (AAT)",
+      "alternateName": "AAT",
+      "version": "1.0",
+      "datePublished": "2026-11-05",
+      "inLanguage": "en-GB",
+      "author": { "@id": "https://architectureastruth.org/#author" },
+      "creator": { "@id": "https://architectureastruth.org/#author" },
+      "copyrightHolder": { "@id": "https://architectureastruth.org/#publisher" },
+      "copyrightYear": 2026,
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "isBasedOn": "https://www.puglieseweb.com/blog/architecture-as-truth",
+      "about": { "@id": "https://architectureastruth.org/#definition" },
+      "url": "https://architectureastruth.org/"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://architectureastruth.org/#site",
+      "name": "Architecture as Truth",
+      "url": "https://architectureastruth.org/",
+      "inLanguage": "en-GB",
+      "publisher": { "@id": "https://architectureastruth.org/#publisher" },
+      "author": { "@id": "https://architectureastruth.org/#author" },
+      "mainEntity": { "@id": "https://architectureastruth.org/#wording" }
+    }
+  ]
+}
+</script>
+<style>
+:root {
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --text: #1c1d1f;
+  --muted: #5b5f66;
+  --rule: #e4e1da;
+  --accent: #1f5f8b;
+  --accent-soft: #e8f0f6;
+  --code-bg: #f3f1ec;
+  --mark: #b4462b;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131416;
+    --surface: #1b1c1f;
+    --text: #e9e7e2;
+    --muted: #a3a6ad;
+    --rule: #2e3035;
+    --accent: #7fb6dd;
+    --accent-soft: #1d2a35;
+    --code-bg: #202226;
+    --mark: #e58a6f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131416;
+  --surface: #1b1c1f;
+  --text: #e9e7e2;
+  --muted: #a3a6ad;
+  --rule: #2e3035;
+  --accent: #7fb6dd;
+  --accent-soft: #1d2a35;
+  --code-bg: #202226;
+  --mark: #e58a6f;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 18px/1.65 ui-serif, Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+}
+.sans, h1, h2, h3, nav, .meta, table, footer, .kicker, .btn, figcaption {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+a { color: var(--accent); text-underline-offset: 0.15em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 0 16px; }
+header.top { border-bottom: 1px solid var(--rule); }
+header.top .wrap { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; align-items: baseline; justify-content: space-between; padding-top: 0.9rem; padding-bottom: 0.9rem; }
+.brand { font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.01em; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.2rem 1rem; font-size: 0.85rem; }
+nav a { color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--accent); }
+.hero { padding: 3.5rem 0 1rem; }
+.kicker { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.75rem; color: var(--muted); margin: 0 0 0.75rem; }
+h1 { font-size: clamp(2.1rem, 6vw, 3.1rem); line-height: 1.1; letter-spacing: -0.025em; margin: 0 0 0.6rem; }
+.byline { color: var(--muted); font-size: 0.95rem; margin: 0 0 2rem; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.byline strong { color: var(--text); font-weight: 600; }
+blockquote.definition {
+  margin: 0 0 1.25rem;
+  padding: 1.25rem 1.4rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: 6px;
+  font-size: 1.12rem;
+}
+blockquote.definition p { margin: 0; }
+h2 { font-size: 1.45rem; letter-spacing: -0.015em; line-height: 1.25; margin: 3.25rem 0 0.9rem; padding-top: 0.5rem; }
+h3 { font-size: 1.05rem; margin: 1.75rem 0 0.4rem; }
+section { scroll-margin-top: 1rem; }
+ol.principles, ol.rules { padding-left: 0; list-style: none; counter-reset: item; margin: 0; }
+ol.principles > li, ol.rules > li { counter-increment: item; position: relative; padding: 0.85rem 0 0.85rem 2.6rem; border-top: 1px solid var(--rule); }
+ol.principles > li:last-child, ol.rules > li:last-child { border-bottom: 1px solid var(--rule); }
+ol.principles > li::before, ol.rules > li::before {
+  content: counter(item);
+  position: absolute; left: 0; top: 0.95rem;
+  width: 1.8rem; height: 1.8rem; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent);
+  font: 600 0.85rem/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.note { color: var(--muted); font-size: 0.95rem; }
+.callout { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 1rem 1.2rem; }
+.callout p:first-child { margin-top: 0; }
+.callout p:last-child { margin-bottom: 0; }
+pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 0.86em; }
+code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 4px; }
+pre { background: var(--code-bg); padding: 0.9rem 1rem; border-radius: 6px; overflow-x: auto; line-height: 1.5; }
+pre code { background: none; padding: 0; font-size: 0.82rem; }
+.steps { padding-left: 1.3rem; }
+.steps li { margin: 0.4rem 0; }
+.table-wrap { overflow-x: auto; margin: 0.75rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; line-height: 1.5; }
+th, td { text-align: left; vertical-align: top; padding: 0.6rem 0.7rem; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.btns { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.25rem 0 0; }
+.btn { display: inline-block; padding: 0.55rem 0.95rem; border-radius: 6px; border: 1px solid var(--rule); background: var(--surface); color: var(--text); text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.btn:hover { border-color: var(--accent); }
+.cite { position: relative; }
+.cite button { position: absolute; top: 0.5rem; right: 0.5rem; font: 600 0.75rem/1 ui-sans-serif, system-ui, sans-serif; padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--rule); background: var(--surface); color: var(--muted); cursor: pointer; }
+.cite button:hover { color: var(--accent); border-color: var(--accent); }
+footer { margin-top: 4rem; border-top: 1px solid var(--rule); padding: 1.5rem 0 3rem; color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+footer p { margin: 0.35rem 0; }
+@media (max-width: 520px) {
+  body { font-size: 17px; }
+  .hero { padding-top: 2.25rem; }
+  ol.principles > li, ol.rules > li { padding-left: 2.3rem; }
+}
+@media print {
+  header.top nav, .btns, .cite button { display: none; }
+  body { background: #fff; color: #000; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/">Architecture as Truth</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#definition">Definition</a></li>
+        <li><a href="#principles">Principles</a></li>
+        <li><a href="#rules">Rules for agents</a></li>
+        <li><a href="#start">Start</a></li>
+        <li><a href="#tools">Tool builders</a></li>
+        <li><a href="#cite">Cite</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" id="definition" aria-labelledby="title">
+    <p class="kicker">A practice for building software with AI agents · Version 1.0</p>
+    <h1 id="title">Architecture as Truth (AAT)</h1>
+    <p class="byline">Set out by <strong>Emanuele Pugliese</strong> on 5 November 2026</p>
+
+    <blockquote class="definition">
+      <p><strong>Architecture as Truth (AAT)</strong> is a way of building software in which the architecture documents (the decisions, the contracts, the behaviours and the plan) are the single source of truth about the product. People decide by changing those documents, AI agents build from them, and everything that ships is reconciled back into them.</p>
+    </blockquote>
+
+    <p>"Architecture" here means more than boxes and arrows: it is everything that says what the product is, what it promises and why.</p>
+
+    <p>AI now does the production work in software: the code, the documentation, the scenarios. What is left for people is understanding the product, judging what it should become, and noticing when generated work is wrong for this system. AAT is how a team builds that understanding and holds its agents to it. It needs no product: a Git repository, plain text files, a test runner and an AI agent held to four rules.</p>
+
+    <div class="btns">
+      <a class="btn primary" href="#start">Start in an hour</a>
+      <a class="btn" href="https://github.com/puglieseweb-personal/architecture-as-truth">The repository</a>
+      <a class="btn" href="https://www.puglieseweb.com/blog/architecture-as-truth">Read the article</a>
+    </div>
+  </section>
+
+  <section id="principles" aria-labelledby="h-principles">
+    <h2 id="h-principles">The five principles</h2>
+    <ol class="principles">
+      <li><strong>Write the truth down, in words the whole team can read.</strong> If it is not in the documents, it has not been decided. The documents live in version control, beside the code.</li>
+      <li><strong>Decide in the documents, before the build.</strong> A change to the product begins as a change to the truth. People approve documents, not diffs.</li>
+      <li><strong>One truth for people and for agents.</strong> The file a person approved is the file the agent is given at the moment it writes. No second copy in a wiki, no private prompt.</li>
+      <li><strong>Hold the system to the truth, and the truth to the system.</strong> The scenarios run as tests. The contract is tested against the real code. Every change is recorded with the documents it touched, each one updated or marked unchanged with the reason. When a document and the system disagree, one of them has a defect, and it gets fixed.</li>
+      <li><strong>Everyone reads, and anyone corrects.</strong> Understanding the product is not a role. The documents are short and plain enough for the analyst, the tester and the founder to read, and whoever knows better says so before anything is built.</li>
+    </ol>
+  </section>
+
+  <section id="rules" aria-labelledby="h-rules">
+    <h2 id="h-rules">The four rules for an AI agent</h2>
+    <ol class="rules">
+      <li><strong>Read before writing.</strong> Before it changes anything, the agent fetches the decisions, the contracts and the behaviours that govern what it is about to touch.</li>
+      <li><strong>Build what was approved.</strong> It may not edit a contract, or the wording of a scenario, to make its own work pass.</li>
+      <li><strong>Stop, do not patch.</strong> When the truth is wrong or silent, the agent raises an amendment for a person and waits for the answer.</li>
+      <li><strong>Leave the truth true.</strong> Its change names the documents it relied on and updates the ones it made out of date.</li>
+    </ol>
+    <p class="note">A pipeline can enforce the second and the fourth today, and the <a href="https://github.com/puglieseweb-personal/architecture-as-truth/tree/main/checks">two checks in the repository</a> do. The first and the third can only be asked for. An agent will sometimes build through a silence, and its record is what makes that visible.</p>
+  </section>
+
+  <section id="caution" aria-labelledby="h-caution">
+    <h2 id="h-caution">The caution about the name</h2>
+    <p>The running system is the fact. The architecture is the truth about what that system is meant to be, and why. AAT is the discipline of never letting the two drift apart quietly.</p>
+    <h3>What it needs</h3>
+    <p>A Git repository, plain text files, a test runner and an AI agent held to the four rules. No particular product.</p>
+  </section>
+
+  <section id="start" aria-labelledby="h-start">
+    <h2 id="h-start">Start in an hour</h2>
+    <ol class="steps">
+      <li><strong>Copy the starter</strong> into a new repository, or its <code>docs/</code> folder, <code>AGENTS.md</code> and workflow into an existing one.</li>
+      <li><strong>Pick one part of your product.</strong> Write down what it promises and why: one decision, one contract, one feature file of scenarios, and the plan.</li>
+      <li><strong>Merge the documents.</strong> That is the approval, and it is a person's.</li>
+      <li><strong>Ask your AI agent for a change.</strong> It reads <code>AGENTS.md</code>, then the documents, and builds from them.</li>
+      <li><strong>Read the record</strong> it wrote, not the code. Then keep the documents true.</li>
+    </ol>
+    <p>The agent file alone is enough to begin. Your tool reads <code>AGENTS.md</code> at the root of the repository; Claude Code reads it through a one-line <code>CLAUDE.md</code>.</p>
+<pre><code>curl -fsSLO https://architectureastruth.org/AGENTS.md</code></pre>
+    <p>The starter holds templates for each kind of document, a worked example and a workflow that runs both checks on every pull request:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Path</th><th scope="col">What it holds</th></tr></thead>
+        <tbody>
+          <tr><td><code>docs/decisions/</code></td><td>One record per decision: what, why, and what was turned down</td></tr>
+          <tr><td><code>docs/contracts/</code></td><td>What the system promises: OpenAPI, AsyncAPI or a plain contract</td></tr>
+          <tr><td><code>docs/behaviours/</code></td><td>Given/When/Then scenarios, which are also the tests</td></tr>
+          <tr><td><code>docs/plan.md</code></td><td>The stories, one pull request each, in order</td></tr>
+          <tr><td><code>docs/records/</code></td><td>One dated record per change, naming the documents it touched</td></tr>
+          <tr><td><code>AGENTS.md</code></td><td>The four rules, as the file your agent reads</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="btns">
+      <a class="btn primary" href="https://github.com/puglieseweb-personal/architecture-as-truth/tree/main/starter">The starter</a>
+      <a class="btn" href="/AGENTS.md">AGENTS.md</a>
+      <a class="btn" href="https://github.com/puglieseweb-personal/architecture-as-truth/tree/main/checks">The checks</a>
+    </div>
+  </section>
+
+  <section id="tools" aria-labelledby="h-tools">
+    <h2 id="h-tools">For people who build AI coding tools</h2>
+    <p>The four rules apply to every agent and to everyone who builds one. Each comes with a question and a way to test it.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Rule</th><th scope="col">The question</th></tr></thead>
+        <tbody>
+          <tr><td>1. Read before writing</td><td>Does the agent read the governing documents before its first edit, without being told to in the prompt?</td></tr>
+          <tr><td>2. Build what was approved</td><td>When a scenario fails, does the agent fix the code, or the scenario?</td></tr>
+          <tr><td>3. Stop, do not patch</td><td>When the documents do not answer a question the build raises, does the agent ask, or guess?</td></tr>
+          <tr><td>4. Leave the truth true</td><td>Does its change name the documents it read and changed, and update what it made stale?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A tool that passes all four by default may say it <em>meets the four rules of Architecture as Truth 1.0</em>. <a href="https://github.com/puglieseweb-personal/architecture-as-truth/blob/main/checklist/TOOL-BUILDERS.md">The checklist</a> describes each test.</p>
+  </section>
+
+  <section id="implementations" aria-labelledby="h-impl">
+    <h2 id="h-impl">Implementations and adopters</h2>
+    <p>Tools and teams are listed as they report. Nobody outside the author's company has reported adopting AAT yet. If you try it, <a href="https://github.com/puglieseweb-personal/architecture-as-truth/blob/main/IMPLEMENTATIONS.md">add yourself</a>.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Who</th><th scope="col">What</th><th scope="col">Status</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://www.systemdox.com">SystemDox</a></td><td>A tool. Reads the documents from a team's own repositories, renders each change for the person who approves it, and serves the same files to agents over MCP. Interest declared: it is built by the author's company.</td><td>Private preview</td></tr>
+          <tr><td><a href="https://www.puglieseweb.com">PuglieseWeb LTD</a></td><td>A team. More than sixty repositories, several products, one owner who approves and AI agents that build. On 5 November 2026 its decision repository held 226 decision records and 2,975 dated change records.</td><td>Since September 2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="cite" aria-labelledby="h-cite">
+    <h2 id="h-cite">How to cite</h2>
+    <p>Quote the wording as it stands and give the credit line:</p>
+    <div class="callout">
+      <p>Architecture as Truth (AAT) was set out by Emanuele Pugliese in 2026: <a href="https://www.puglieseweb.com/blog/architecture-as-truth">https://www.puglieseweb.com/blog/architecture-as-truth</a></p>
+    </div>
+    <h3>BibTeX</h3>
+    <div class="cite">
+<pre id="bibtex"><code>@misc{pugliese2026aat,
+  author       = {Pugliese, Emanuele},
+  title        = {Architecture as Truth ({AAT})},
+  year         = {2026},
+  month        = nov,
+  version      = {1.0},
+  howpublished = {\url{https://architectureastruth.org/}},
+  note         = {First published at https://www.puglieseweb.com/blog/architecture-as-truth}
+}</code></pre>
+      <button type="button" data-copy="bibtex" hidden>Copy</button>
+    </div>
+    <p>The repository carries a <a href="https://github.com/puglieseweb-personal/architecture-as-truth/blob/main/CITATION.cff">CITATION.cff</a>, which GitHub turns into APA and BibTeX on request.</p>
+
+    <h3>Versions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">What changed</th></tr></thead>
+        <tbody>
+          <tr><td>1.0</td><td>5 November 2026</td><td>The first public wording: the definition, the five principles and the four rules for an AI agent. Published in the article <a href="https://www.puglieseweb.com/blog/architecture-as-truth"><cite>AI Promoted Everybody. Architecture as Truth (AAT) Is the New Job.</cite></a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">A changed wording is a new version with a date, never a quiet edit. <a href="https://github.com/puglieseweb-personal/architecture-as-truth/blob/main/CHANGELOG.md">The changelog</a> records each one.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Architecture as Truth (AAT)</strong> was set out by <a href="https://www.puglieseweb.com/consulting/emanuele-pugliese">Emanuele Pugliese</a> in 2026.</p>
+    <p>Text © 2026 PuglieseWeb LTD, licensed under <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>: use it, adapt it and teach it, crediting Emanuele Pugliese. Code under the <a href="https://github.com/puglieseweb-personal/architecture-as-truth/blob/main/LICENSE">Apache License 2.0</a>. The licence gives no right to the PuglieseWeb name or logos.</p>
+    <p>Interest declared: the author's company builds SystemDox, one implementation of AAT. Nothing on this site needs it.</p>
+    <p><a href="https://github.com/puglieseweb-personal/architecture-as-truth">Source</a> · <a href="/llms.txt">llms.txt</a> · No cookies, no tracking.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var button = document.querySelector('[data-copy]');
+  if (!button || !navigator.clipboard) return;
+  button.hidden = false;
+  button.addEventListener('click', function () {
+    var source = document.getElementById(button.getAttribute('data-copy'));
+    navigator.clipboard.writeText(source.innerText).then(function () {
+      button.textContent = 'Copied';
+      setTimeout(function () { button.textContent = 'Copy'; }, 1600);
+    }, function () {});
+  });
+})();
+</script>
+</body>
+</html>

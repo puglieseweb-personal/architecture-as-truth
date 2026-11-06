@@ -1,0 +1,46 @@
+name: Architecture as Truth
+
+# Two of the four rules for an AI agent can be enforced by a pipeline, and this
+# workflow enforces them on every pull request:
+#   rule 2, build what was approved: a build does not edit an approved contract
+#           or the wording of a scenario (a declared amendment, labelled
+#           `amendment` by a person, may);
+#   rule 4, leave the truth true: a change adds a record naming the documents
+#           it relied on.
+# The other two, read before writing and stop, do not patch, are asked of the
+# agent in AGENTS.md; its record is what shows whether it kept them.
+#
+# The checks come from the Architecture as Truth repository at a tagged
+# release: https://github.com/puglieseweb-personal/architecture-as-truth
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  truth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - name: Fetch the checks
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          repository: puglieseweb-personal/architecture-as-truth
+          ref: v1.0.0
+          path: .aat
+
+      - name: "Rule 2: a build does not edit approved truth"
+        env:
+          AMENDMENT: ${{ contains(github.event.pull_request.labels.*.name, 'amendment') && '--amendment' || '' }}
+          BASE: ${{ github.base_ref }}
+        run: python3 .aat/checks/approved_guard.py --base "origin/$BASE" --head HEAD $AMENDMENT
+
+      - name: "Rule 4: the change names its documents"
+        env:
+          BASE: ${{ github.base_ref }}
+        run: python3 .aat/checks/record_check.py --root . --require-record "origin/$BASE"

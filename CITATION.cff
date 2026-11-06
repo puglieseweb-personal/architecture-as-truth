@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use or refer to Architecture as Truth, please cite it as below and credit the author."
+title: "Architecture as Truth (AAT)"
+version: "1.0"
+date-released: 2026-11-05
+type: software
+authors:
+  - family-names: Pugliese
+    given-names: Emanuele
+    affiliation: PuglieseWeb LTD
+    website: https://www.puglieseweb.com/consulting/emanuele-pugliese
+license: CC-BY-4.0
+url: https://architectureastruth.org/
+repository-code: https://github.com/puglieseweb-personal/architecture-as-truth
+abstract: >-
+  Architecture as Truth (AAT) is a way of building software in which the
+  architecture documents (the decisions, the contracts, the behaviours and the
+  plan) are the single source of truth about the product. People decide by
+  changing those documents, AI agents build from them, and everything that
+  ships is reconciled back into them. The wording is five principles and four
+  rules for an AI agent.
+keywords:
+  - architecture as truth
+  - software architecture
+  - AI agents
+  - AI-assisted software development
+  - spec-driven development
+  - docs as code
+references:
+  - type: article
+    title: "AI Promoted Everybody. Architecture as Truth (AAT) Is the New Job."
+    authors:
+      - family-names: Pugliese
+        given-names: Emanuele
+    date-published: 2026-11-05
+    url: https://www.puglieseweb.com/blog/architecture-as-truth
+    publisher:
+      name: PuglieseWeb LTD
