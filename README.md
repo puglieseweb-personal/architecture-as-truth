@@ -1,5 +1,7 @@
 # Architecture as Truth (AAT)
 
+[![Architecture as Truth](https://architectureastruth.org/badge.svg)](https://architectureastruth.org/)
+
 > **Architecture as Truth (AAT)** is a way of building software in which the architecture documents (the decisions, the contracts, the behaviours and the plan) are the single source of truth about the product. People decide by changing those documents, AI agents build from them, and everything that ships is reconciled back into them.
 
 Set out by **Emanuele Pugliese** in 2026. The standing reference is **https://architectureastruth.org/**. The article that introduced it is [*AI Promoted Everybody. Architecture as Truth (AAT) Is the New Job.*](https://www.puglieseweb.com/blog/architecture-as-truth)

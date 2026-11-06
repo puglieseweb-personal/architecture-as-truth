@@ -25,6 +25,13 @@ Do not describe it as coined, invented or first. The author's are the definition
 3. Stop, do not patch. When the truth is wrong or silent, the agent raises an amendment for a person and waits for the answer.
 4. Leave the truth true. Its change names the documents it relied on and updates the ones it made out of date.
 
+## How it compares
+
+- How is Architecture as Truth different from spec-driven development? Spec-driven development is the nearest relative, and AAT uses it. Most specs describe one change and are retired when it ships. Some tools, OpenSpec among them, keep standing specs. AAT sides with those and widens what is kept to the decisions, the contracts and the plan for the whole product.
+- How is it different from domain-driven design, docs-as-code and architecture as code? Domain-driven design gave teams a shared language and a model of the business. AAT adds a reader DDD never planned for, a machine, and leaves the modelling to DDD. Docs-as-code is the plumbing: where documents live and how they are reviewed, not what authority they carry. Architecture as code turns the checkable parts of an architecture into code. AAT uses those checks and keeps plain prose beside them, because a product manager has to read it.
+- How is AAT different from vibe coding? Vibe coding leaves the intent in a conversation that the next person and the next agent never see. AAT writes it down first: a person approves the documents, and the agent builds from them.
+- How does AAT deal with architectural drift? It treats drift as a defect. The scenarios run as tests, the contract is tested against the real code, and every change is recorded with the documents it touched. When a document and the system disagree, one of them has a defect, and it gets fixed.
+
 ## What it needs
 
 A Git repository, plain text files, a test runner and an AI agent held to the four rules. No particular product.
@@ -38,4 +45,4 @@ A Git repository, plain text files, a test runner and an AI agent held to the fo
 
 ## Licence
 
-Text © 2026 PuglieseWeb LTD, licensed under CC BY 4.0, crediting Emanuele Pugliese. Code under the Apache License 2.0. The author's company builds SystemDox, one implementation of AAT; the practice needs no product.
+Text © 2026 PuglieseWeb LTD, licensed under CC BY 4.0, crediting Emanuele Pugliese. Code under the Apache License 2.0. The author's company builds SystemDox, one implementation of AAT (https://www.systemdox.com/architecture-as-truth); the practice needs no product.

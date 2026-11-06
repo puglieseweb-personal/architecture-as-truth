@@ -1,5 +1,7 @@
 # Architecture as Truth: the starter
 
+[![Architecture as Truth](https://architectureastruth.org/badge.svg)](https://architectureastruth.org/)
+
 A repository shaped for Architecture as Truth (AAT), with nothing to install. Copy it, write down one part of your product, and let your AI agent build from the documents. The standing reference for the practice is https://architectureastruth.org/.
 
 ## The shape
