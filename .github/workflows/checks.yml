@@ -1,0 +1,48 @@
+name: Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+
+      - name: Test the checks
+        run: |
+          python -m pip install --quiet pytest
+          python -m pytest checks -q
+
+      - name: The site serves the same agent file as the repository
+        run: cmp agent/AGENTS.md site/AGENTS.md
+
+      - name: The starter's own record passes the record check
+        run: python checks/record_check.py --root starter
+
+      - name: This repository's records pass the record check
+        run: python checks/record_check.py --root .
+
+      - name: This repository records its own changes (rule 4)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.base_ref }}
+        run: python checks/record_check.py --root . --require-record "origin/$BASE"
+
+      - name: The wording changes only by a declared amendment (rule 2)
+        if: github.event_name == 'pull_request'
+        env:
+          AMENDMENT: ${{ contains(github.event.pull_request.labels.*.name, 'amendment') && '--amendment' || '' }}
+          BASE: ${{ github.base_ref }}
+        run: python checks/approved_guard.py --base "origin/$BASE" --head HEAD --guard ARCHITECTURE-AS-TRUTH.md --guard agent/AGENTS.md $AMENDMENT

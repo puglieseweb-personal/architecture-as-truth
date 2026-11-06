@@ -1,0 +1,87 @@
+openapi: 3.1.0
+# A contract is written by hand before any handler exists, so that a person
+# reviews the API rather than a record of what was built. Keep it beside the
+# decision that names it, and let a contract test assert that the real
+# handler's responses match these schemas. An approved contract changes only
+# by amendment: a pull request that changes this file alone, merged by a person.
+info:
+  title: <Service> API
+  version: 1.0.0
+  description: >-
+    What this API promises. Decision: docs/decisions/ADR-NNNN-slug.md.
+    Behaviours: docs/behaviours/name.feature.
+servers:
+  - url: https://api.example.com
+security:
+  - bearerAuth: []
+paths:
+  /things:
+    post:
+      operationId: createThing
+      summary: Create a thing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThingRequest'
+            examples:
+              ordinary:
+                value: { name: "A thing" }
+      responses:
+        '201':
+          description: The thing was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Thing'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorised'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    ThingRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+          maxLength: 120
+    Thing:
+      type: object
+      required: [id, name, createdAt]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Problem:
+      description: RFC 9457 problem details
+      type: object
+      required: [type, title, status]
+      properties:
+        type: { type: string, format: uri }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+  responses:
+    BadRequest:
+      description: The request was malformed; `detail` says which field
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+    Unauthorised:
+      description: No valid credential
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
