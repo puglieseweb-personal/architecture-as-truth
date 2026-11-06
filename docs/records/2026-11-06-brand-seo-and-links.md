@@ -6,7 +6,7 @@
 ## Merged
 | PR | Title |
 |---|---|
-| https://github.com/puglieseweb-personal/architecture-as-truth/pull/PRNUM | The reference site takes the AAT brand, search metadata and links to its companions |
+| https://github.com/puglieseweb-personal/architecture-as-truth/pull/2 | The reference site takes the AAT brand, search metadata and links to its companions |
 
 ## What changed
 The site moves to the Architecture as Truth brand: the mark, the hero, the share banner, the Blueprint Signal palette, and JetBrains Mono with Inter. The fonts are served from the site, so it still loads nothing from a third party and the footer's "no tracking" stays true. The title and description are rewritten for search, and the structured data gains keywords, the article and the questions. A new Questions section answers what people search for: spec-driven development, domain-driven design, docs-as-code, architecture as code, vibe coding, architectural drift, which agents, and whether a product is needed. Most of its answers are the article's words or the fixed wording. A new Pass it on section holds share links and a README badge, and the starter and this README carry the badge. SystemDox's row and the footer's interest note link to the page about that implementation. The long citation link no longer widens the page on a phone.
