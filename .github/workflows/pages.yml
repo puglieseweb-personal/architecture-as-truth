@@ -34,3 +34,17 @@ jobs:
           path: site
       - id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+      # Tell Bing and the other IndexNow engines what the sitemap lists. The key
+      # is public by design: it is the file site/<key>.txt. A refusal warns and
+      # does not fail the deploy, because the site is already live by then.
+      - name: Submit the sitemap to IndexNow
+        env:
+          INDEXNOW_KEY: e5a2bbd50c7739a4e634c85a15605ce3
+        run: |
+          URLS=$(grep -o '<loc>[^<]*' site/sitemap.xml | sed 's/<loc>//' | jq -R . | jq -s .)
+          BODY=$(jq -n --arg key "$INDEXNOW_KEY" --argjson urls "$URLS" '{host: "architectureastruth.org", key: $key, keyLocation: ("https://architectureastruth.org/" + $key + ".txt"), urlList: $urls}')
+          STATUS=$(curl -s -o /tmp/indexnow.out -w '%{http_code}' --max-time 30 -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' -d "$BODY" || true)
+          case "$STATUS" in
+            200|202) echo "IndexNow accepted (HTTP $STATUS)" ;;
+            *) echo "::warning::IndexNow answered HTTP $STATUS: $(head -c 300 /tmp/indexnow.out)" ;;
+          esac
