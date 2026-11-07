@@ -6,7 +6,7 @@ Architecture as Truth needs no product: a Git repository, plain text files, a te
 
 | Tool | What it implements | Status | Interest |
 |---|---|---|---|
-| [SystemDox](https://www.systemdox.com) | Principle 3, one truth for people and for agents, across many repositories: it reads the documents from a team's own Git repositories, which stay the source of truth, renders each change's brief for the person who approves it, and serves the same files to agents over MCP. Rules 1 and 4 at the agent's end: `get_context` before writing, `report_decision` and the record afterwards. | Private preview. Runs PuglieseWeb's own engineering; not open to the public yet. | Built by PuglieseWeb LTD, the author's company. |
+| [SystemDox](https://www.systemdox.com/architecture-as-truth) | Principle 3, one truth for people and for agents, across many repositories: it reads the documents from a team's own Git repositories, which stay the source of truth, renders each change's brief for the person who approves it, and serves the same files to agents over MCP. Rules 1 and 4 at the agent's end: `get_context` before writing, `report_decision` and the record afterwards. | Private preview. Runs PuglieseWeb's own engineering; not open to the public yet. | Built by PuglieseWeb LTD, the author's company. |
 
 ## Teams
 
