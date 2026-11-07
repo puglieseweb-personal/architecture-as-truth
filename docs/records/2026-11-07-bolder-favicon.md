@@ -6,7 +6,7 @@
 ## Merged
 | PR | Title |
 |---|---|
-| PR_URL | The browser icon can be read at tab size |
+| https://github.com/puglieseweb-personal/architecture-as-truth/pull/5 | The browser icon can be read at tab size |
 
 ## What changed
 The browser icon is drawn again from the mark's own outline. The old `favicon.svg` placed the mark on the full logo canvas, so it filled about 60% of the icon, and its lines were under one pixel wide in a 16-pixel tab. The mark now fills a dark rounded square to about 80%, with every edge thickened by 16 units. `favicon.svg`, `favicon-32.png` and `apple-touch-icon.png` are replaced, and `favicon.ico` (16, 32 and 48 pixels) is added for the tools and search results that still ask for it. Both pages link the new file. The mark's shape and colours are unchanged, and the page still loads nothing from a third party.
